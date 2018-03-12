@@ -347,12 +347,12 @@ static int ump_file_ioctl(struct inode *inode, struct file *filp, unsigned int c
 		break;
 
 	case UMP_IOC_DMABUF_IMPORT:
-		#ifdef CONFIG_DMA_SHARED_BUFFER
+#ifdef CONFIG_DMA_SHARED_BUFFER
 		err = ump_dmabuf_import_wrapper((u32 __user *)argument, session_data);
-		#else
+#else
 		err = -EFAULT;
 		DBG_MSG(1, ("User space use dmabuf API, but kernel don't support DMA BUF\n"));
-		#endif
+#endif
 		break;
 
 	default:

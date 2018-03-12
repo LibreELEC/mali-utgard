@@ -764,10 +764,6 @@ typedef struct {
 	u32 flags;
 	u64 backend_handle;                               /**< [out] backend handle */
 	s32 secure_shared_fd;                           /** < [in] the mem handle for secure mem */
-	struct {
-		/* buffer types*/
-		/* CPU read/write info*/
-	} buffer_info;
 } _mali_uk_alloc_mem_s;
 
 
@@ -814,9 +810,6 @@ typedef struct {
 			u32 rights;                     /**< [in] rights necessary for accessing memory */
 			u32 flags;                      /**< [in] flags, see \ref _MALI_MAP_EXTERNAL_MAP_GUARD_PAGE */
 		} bind_dma_buf;
-		struct {
-			/**/
-		} bind_mali_memory;
 		struct {
 			u32 phys_addr;                  /**< [in] physical address */
 			u32 rights;                     /**< [in] rights necessary for accessing memory */

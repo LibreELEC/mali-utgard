@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2015 ARM Limited. All rights reserved.
+ * Copyright (C) 2010-2016 ARM Limited. All rights reserved.
  * 
  * This program is free software and is provided to you under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation, and any use by you of this program is subject to the terms of such GNU licence.
@@ -42,6 +42,10 @@
 #include "mali_control_timer.h"
 #include "mali_dvfs_policy.h"
 #include <linux/sched.h>
+#include <linux/atomic.h>
+#if defined(CONFIG_MALI_DMA_BUF_FENCE)
+#include <linux/fence.h>
+#endif
 
 #define MALI_SHARED_MEMORY_DEFAULT_SIZE 0xffffffff
 
@@ -1148,6 +1152,17 @@ _mali_osk_errcode_t _mali_ukk_open(void **context)
 	if (NULL == session->soft_job_system) {
 		goto err_soft;
 	}
+
+	/* Initialize the dma fence context.*/
+#if defined(CONFIG_MALI_DMA_BUF_FENCE)
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(3, 17, 0)
+	session->fence_context = fence_context_alloc(1);
+	_mali_osk_atomic_init(&session->fence_seqno, 0);
+#else
+	MALI_PRINT_ERROR(("The kernel version not support dma fence!\n"));
+	goto err_time_line;
+#endif
+#endif
 
 	/* Create timeline system. */
 	session->timeline_system = mali_timeline_system_create(session);
