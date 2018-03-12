@@ -72,26 +72,26 @@ int (*mali_gpu_reset_and_secure_mode_disable)(void) = NULL;
 #define MALI_OSK_RESOURCE_DMA_LOCATION 26
 
 static _mali_osk_resource_t mali_osk_resource_bank[MALI_OSK_MAX_RESOURCE_NUMBER] = {
-	{.description = "Mali_GP", .base = MALI_OFFSET_GP, .irq_name = "IRQGP",},
-	{.description = "Mali_GP_MMU", .base = MALI_OFFSET_GP_MMU, .irq_name = "IRQGPMMU",},
-	{.description = "Mali_PP0", .base = MALI_OFFSET_PP0, .irq_name = "IRQPP0",},
-	{.description = "Mali_PP0_MMU", .base = MALI_OFFSET_PP0_MMU, .irq_name = "IRQPPMMU0",},
-	{.description = "Mali_PP1", .base = MALI_OFFSET_PP1, .irq_name = "IRQPP1",},
-	{.description = "Mali_PP1_MMU", .base = MALI_OFFSET_PP1_MMU, .irq_name = "IRQPPMMU1",},
-	{.description = "Mali_PP2", .base = MALI_OFFSET_PP2, .irq_name = "IRQPP2",},
-	{.description = "Mali_PP2_MMU", .base = MALI_OFFSET_PP2_MMU, .irq_name = "IRQPPMMU2",},
-	{.description = "Mali_PP3", .base = MALI_OFFSET_PP3, .irq_name = "IRQPP3",},
-	{.description = "Mali_PP3_MMU", .base = MALI_OFFSET_PP3_MMU, .irq_name = "IRQPPMMU3",},
-	{.description = "Mali_PP4", .base = MALI_OFFSET_PP4, .irq_name = "IRQPP4",},
-	{.description = "Mali_PP4_MMU", .base = MALI_OFFSET_PP4_MMU, .irq_name = "IRQPPMMU4",},
-	{.description = "Mali_PP5", .base = MALI_OFFSET_PP5, .irq_name = "IRQPP5",},
-	{.description = "Mali_PP5_MMU", .base = MALI_OFFSET_PP5_MMU, .irq_name = "IRQPPMMU5",},
-	{.description = "Mali_PP6", .base = MALI_OFFSET_PP6, .irq_name = "IRQPP6",},
-	{.description = "Mali_PP6_MMU", .base = MALI_OFFSET_PP6_MMU, .irq_name = "IRQPPMMU6",},
-	{.description = "Mali_PP7", .base = MALI_OFFSET_PP7, .irq_name = "IRQPP7",},
-	{.description = "Mali_PP7_MMU", .base = MALI_OFFSET_PP7_MMU, .irq_name = "IRQPPMMU",},
-	{.description = "Mali_PP_Broadcast", .base = MALI_OFFSET_PP_BCAST, .irq_name = "IRQPP",},
-	{.description = "Mali_PMU", .base = MALI_OFFSET_PMU, .irq_name = "IRQPMU",},
+	{.description = "Mali_GP", .base = MALI_OFFSET_GP, .irq_name = "gp",},
+	{.description = "Mali_GP_MMU", .base = MALI_OFFSET_GP_MMU, .irq_name = "gpmmu",},
+	{.description = "Mali_PP0", .base = MALI_OFFSET_PP0, .irq_name = "pp0",},
+	{.description = "Mali_PP0_MMU", .base = MALI_OFFSET_PP0_MMU, .irq_name = "ppmmu0",},
+	{.description = "Mali_PP1", .base = MALI_OFFSET_PP1, .irq_name = "pp1",},
+	{.description = "Mali_PP1_MMU", .base = MALI_OFFSET_PP1_MMU, .irq_name = "ppmmu1",},
+	{.description = "Mali_PP2", .base = MALI_OFFSET_PP2, .irq_name = "pp2",},
+	{.description = "Mali_PP2_MMU", .base = MALI_OFFSET_PP2_MMU, .irq_name = "ppmmu2",},
+	{.description = "Mali_PP3", .base = MALI_OFFSET_PP3, .irq_name = "pp3",},
+	{.description = "Mali_PP3_MMU", .base = MALI_OFFSET_PP3_MMU, .irq_name = "ppmmu3",},
+	{.description = "Mali_PP4", .base = MALI_OFFSET_PP4, .irq_name = "pp4",},
+	{.description = "Mali_PP4_MMU", .base = MALI_OFFSET_PP4_MMU, .irq_name = "ppmmu4",},
+	{.description = "Mali_PP5", .base = MALI_OFFSET_PP5, .irq_name = "pp5",},
+	{.description = "Mali_PP5_MMU", .base = MALI_OFFSET_PP5_MMU, .irq_name = "ppmmu5",},
+	{.description = "Mali_PP6", .base = MALI_OFFSET_PP6, .irq_name = "pp6",},
+	{.description = "Mali_PP6_MMU", .base = MALI_OFFSET_PP6_MMU, .irq_name = "ppmmu6",},
+	{.description = "Mali_PP7", .base = MALI_OFFSET_PP7, .irq_name = "pp7",},
+	{.description = "Mali_PP7_MMU", .base = MALI_OFFSET_PP7_MMU, .irq_name = "ppmmu7",},
+	{.description = "Mali_PP_Broadcast", .base = MALI_OFFSET_PP_BCAST, .irq_name = "pp",},
+	{.description = "Mali_PMU", .base = MALI_OFFSET_PMU, .irq_name = "pmu",},
 	{.description = "Mali_L2", .base = MALI_OFFSET_L2_RESOURCE0,},
 	{.description = "Mali_L2", .base = MALI_OFFSET_L2_RESOURCE1,},
 	{.description = "Mali_L2", .base = MALI_OFFSET_L2_RESOURCE2,},
@@ -101,13 +101,13 @@ static _mali_osk_resource_t mali_osk_resource_bank[MALI_OSK_MAX_RESOURCE_NUMBER]
 	{.description = "Mali_DMA", .base = MALI_OFFSET_DMA,},
 };
 
-static int _mali_osk_get_compatible_name(const char **out_string)
+static int _mali_osk_device_is_compatible(const char *name)
 {
 	struct device_node *node = mali_platform_device->dev.of_node;
 
 	MALI_DEBUG_ASSERT(NULL != node);
 
-	return of_property_read_string(node, "compatible", out_string);
+	return of_device_is_compatible(node, name);
 }
 
 _mali_osk_errcode_t _mali_osk_resource_initialize(void)
@@ -115,16 +115,13 @@ _mali_osk_errcode_t _mali_osk_resource_initialize(void)
 	mali_bool mali_is_450 = MALI_FALSE, mali_is_470 = MALI_FALSE;
 	int i, pp_core_num = 0, l2_core_num = 0;
 	struct resource *res;
-	const char *compatible_name = NULL;
 
-	if (0 == _mali_osk_get_compatible_name(&compatible_name)) {
-		if (0 == strncmp(compatible_name, "arm,mali-450", strlen("arm,mali-450"))) {
-			mali_is_450 = MALI_TRUE;
-			MALI_DEBUG_PRINT(2, ("mali-450 device tree detected."));
-		} else if (0 == strncmp(compatible_name, "arm,mali-470", strlen("arm,mali-470"))) {
-			mali_is_470 = MALI_TRUE;
-			MALI_DEBUG_PRINT(2, ("mali-470 device tree detected."));
-		}
+	if (_mali_osk_device_is_compatible("arm,mali-450")) {
+		mali_is_450 = MALI_TRUE;
+		MALI_DEBUG_PRINT(2, ("mali-450 device tree detected."));
+	} else if (_mali_osk_device_is_compatible("arm,mali-470")) {
+		mali_is_470 = MALI_TRUE;
+		MALI_DEBUG_PRINT(2, ("mali-470 device tree detected."));
 	}
 
 	for (i = 0; i < MALI_OSK_RESOURCE_WITH_IRQ_NUMBER; i++) {

@@ -554,8 +554,8 @@ static int mali_probe(struct platform_device *pdev)
 		MALI_DEBUG_PRINT(3, ("OPP table not found\n"));
 #endif
 
-	/* Need to name the gpu clock "clk_mali" in the device tree */
-	mdev->clock = clk_get(mdev->dev, "clk_mali");
+	/* Need to name the gpu clock "core" in the device tree */
+	mdev->clock = clk_get(mdev->dev, "core");
 	if (IS_ERR_OR_NULL(mdev->clock)) {
 		MALI_DEBUG_PRINT(2, ("Continuing without Mali clock control\n"));
 		mdev->clock = NULL;
