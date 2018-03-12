@@ -13,7 +13,13 @@
 #include <linux/cdev.h>              /* character device definitions */
 #include <linux/ioport.h>            /* request_mem_region */
 #include <linux/mm.h>                /* memory management functions and types */
-#include <asm/uaccess.h>             /* user space access */
+#include <linux/version.h>
+
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(4,12,0)
+#include <linux/uaccess.h>
+#else
+#include <asm/uaccess.h>
+#endif
 #include <asm/atomic.h>
 #include <linux/device.h>
 #include <linux/debugfs.h>

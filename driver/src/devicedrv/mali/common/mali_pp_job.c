@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2017 ARM Limited. All rights reserved.
+ * Copyright (C) 2011-2016 ARM Limited. All rights reserved.
  * 
  * This program is free software and is provided to you under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation, and any use by you of this program is subject to the terms of such GNU licence.
@@ -45,7 +45,7 @@ struct mali_pp_job *mali_pp_job_create(struct mali_session_data *session,
 
 	job = _mali_osk_calloc(1, sizeof(struct mali_pp_job));
 	if (NULL != job) {
-		
+
 		_mali_osk_list_init(&job->list);
 		_mali_osk_list_init(&job->session_fb_lookup_list);
 		_mali_osk_atomic_inc(&session->number_of_pp_jobs);

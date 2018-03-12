@@ -13,8 +13,12 @@
  * Defines the wrapper functions which turn Linux IOCTL calls into _ukk_ calls for the reference implementation
  */
 
-
-#include <asm/uaccess.h>             /* user space access */
+#include <linux/version.h>
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(4,12,0)
+#include <linux/uaccess.h>
+#else
+#include <asm/uaccess.h>
+#endif
 
 #include "ump_osk.h"
 #include "ump_uk_types.h"

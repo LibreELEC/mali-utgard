@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012-2017 ARM Limited. All rights reserved.
+ * Copyright (C) 2012-2016 ARM Limited. All rights reserved.
  * 
  * This program is free software and is provided to you under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation, and any use by you of this program is subject to the terms of such GNU licence.
@@ -72,7 +72,7 @@ mali_bool mali_session_pp_job_is_empty(void *data)
 	struct mali_session_data *session = (struct mali_session_data *)data;
 	MALI_DEBUG_ASSERT_POINTER(session);
 
-	if ( 0 == _mali_osk_atomic_read(&session->number_of_pp_jobs)) {
+	if (0 == _mali_osk_atomic_read(&session->number_of_pp_jobs)) {
 		return MALI_TRUE;
 	}
 	return MALI_FALSE;
