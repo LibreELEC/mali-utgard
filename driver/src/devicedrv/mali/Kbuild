@@ -60,17 +60,20 @@ mali-y += \
 	linux/mali_osk_mali.o \
 	linux/mali_osk_notification.o \
 	linux/mali_osk_time.o \
-	linux/mali_osk_timers.o
+	linux/mali_osk_timers.o \
+	linux/mali_osk_bitmap.o
 
 mali-y += linux/mali_memory.o linux/mali_memory_os_alloc.o
 mali-y += linux/mali_memory_external.o
 mali-y += linux/mali_memory_block_alloc.o
+mali-y += linux/mali_memory_swap_alloc.o
 
 mali-y += \
 	linux/mali_memory_manager.o \
 	linux/mali_memory_virtual.o \
 	linux/mali_memory_util.o \
-	linux/mali_memory_cow.o
+	linux/mali_memory_cow.o \
+	linux/mali_memory_defer_bind.o
 
 mali-y += \
 	linux/mali_ukk_mem.o \
@@ -158,7 +161,7 @@ ccflags-$(CONFIG_MALI400_UMP) += -I$(src)/../../ump/include/ump
 ccflags-$(CONFIG_MALI400_DEBUG) += -DDEBUG
 
 # Use our defines when compiling
-ccflags-y += -I$(src) -I$(src)/include -I$(src)/common -I$(src)/linux -I$(src)/platform
+ccflags-y += -I$(src) -I$(src)/include -I$(src)/common -I$(src)/linux -I$(src)/platform -Wno-date-time
 
 # Get subversion revision number, fall back to only ${MALI_RELEASE_NAME} if no svn info is available
 MALI_RELEASE_NAME=$(shell cat $(src)/.version 2> /dev/null)
