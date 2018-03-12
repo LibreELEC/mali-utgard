@@ -277,15 +277,15 @@ void _ump_osk_msync(ump_dd_mem *mem, void *virt, u32 offset, u32 size, ump_uk_ms
 		}
 
 		if (size < block->size - offset) {
-			end_p = start_p + size - 1;
+			end_p = start_p + size;
 			size = 0;
 		} else {
 			if (offset) {
-				end_p = start_p + (block->size - offset - 1);
+				end_p = start_p + (block->size - offset);
 				size -= block->size - offset;
 				offset = 0;
 			} else {
-				end_p = start_p + block->size - 1;
+				end_p = start_p + block->size;
 				size -= block->size;
 			}
 		}
