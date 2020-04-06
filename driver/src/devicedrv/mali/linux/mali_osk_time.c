@@ -53,5 +53,5 @@ u64 _mali_osk_time_get_ns(void)
 
 u64 _mali_osk_boot_time_get_ns(void)
 {
-	return ktime_get_boottime_ns;
+	return ktime_get_boottime_ns();
 }
