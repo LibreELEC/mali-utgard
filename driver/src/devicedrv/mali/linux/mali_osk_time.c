@@ -46,12 +46,12 @@ void _mali_osk_time_ubusydelay(u32 usecs)
 
 u64 _mali_osk_time_get_ns(void)
 {
-	struct timespec tsval;
-	getnstimeofday(&tsval);
-	return (u64)timespec_to_ns(&tsval);
+	struct timespec64 ts64;
+	ktime_get_real_ts64(&ts64);
+	return timespec64_to_ns(&ts64);
 }
 
 u64 _mali_osk_boot_time_get_ns(void)
 {
-	return (u64)ktime_to_ns(ktime_get_boottime());
+	return ktime_get_boottime_ns();
 }
