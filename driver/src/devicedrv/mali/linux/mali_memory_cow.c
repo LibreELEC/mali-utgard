@@ -529,13 +529,13 @@ int mali_mem_cow_cpu_map(mali_mem_backend *mem_bkend, struct vm_area_struct *vma
 
 	list_for_each_entry(m_page, &cow->pages, list) {
 		/* We should use vm_insert_page, but it does a dcache
-		 * flush which makes it way slower than remap_pfn_range or vm_insert_pfn.
-		ret = vm_insert_page(vma, addr, page);
+		 * flush which makes it way slower than remap_pfn_range or vmf_insert_pfn.
+		ret = vmf_insert_page(vma, addr, page);
 		*/
 		ret = vmf_insert_pfn(vma, addr, _mali_page_node_get_pfn(m_page));
 
 		if (unlikely(ret & VM_FAULT_ERROR)) {
-			return -EFAULT;
+			return ret;
 		}
 		addr += _MALI_OSK_MALI_PAGE_SIZE;
 	}
